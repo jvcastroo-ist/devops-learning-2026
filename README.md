@@ -1,78 +1,78 @@
 # DevOps Learning Journey 2026
 
-Projeto prático para demonstrar habilidades DevOps através da construção, deploy e automação de um portfolio web.
+Hands-on project to demonstrate DevOps skills through building, deploying, and automating a web portfolio.
 
-## 🎯 Objetivo
+## 🎯 Objective
 
-Aprender e demonstrar competências essenciais de DevOps construindo um projeto real do zero, incluindo:
-- Containerização com Docker
-- Infraestrutura como Código (Terraform)
+Learn and demonstrate essential DevOps skills by building a real project from scratch, including:
+- Containerization with Docker
+- Infrastructure as Code (Terraform)
 - Cloud Computing (AWS)
 - CI/CD (GitHub Actions)
-- Automação e scripting
+- Automation and scripting
 
-## 🏗️ Arquitetura
+## 🏗️ Architecture
 ```
 [GitHub] → [GitHub Actions] → [Docker Hub] → [AWS EC2]
     ↓           ↓                   ↓            ↓
-  Código     Build/Test          Registry     Deploy
+  Code      Build/Test          Registry     Deploy
 ```
 
-## 🛠️ Stack Tecnológico
+## 🛠️ Tech Stack
 
 - **Frontend**: HTML/CSS/JavaScript
 - **Web Server**: Nginx
-- **Containerização**: Docker
+- **Containerization**: Docker
 - **Cloud Provider**: AWS (EC2, VPC, Security Groups)
 - **IaC**: Terraform
 - **CI/CD**: GitHub Actions
-- **Controle de Versão**: Git/GitHub
+- **Version Control**: Git/GitHub
 
-## 📋 Progresso do Projeto
+## 📋 Project Progress
 
-### ✅ Fase 1: Setup Inicial (Semana 1)
-- [x] Repositório criado
-- [x] Ambiente local configurado
-- [x] Site estático criado
-- [x] Dockerfile criado
-- [x] Container rodando localmente
+### ✅ Phase 1: Initial Setup (Week 1)
+- [x] Repository created
+- [x] Local environment configured
+- [x] Static site created
+- [x] Dockerfile created
+- [x] Container running locally
 
-### 🔄 Fase 2: Deploy Manual (Semana 2)
-- [x] Conta AWS configurada
-- [x] EC2 provisionada
-- [ ] Deploy manual realizado
-- [ ] Site acessível publicamente
-- [ ] DNS configurado
+### 🔄 Phase 2: Manual Deploy (Week 2)
+- [x] AWS account configured
+- [x] EC2 provisioned
+- [ ] Manual deployment completed
+- [ ] Site publicly accessible
+- [ ] DNS configured
 
-### 📦 Fase 3: Infraestrutura como Código (Semana 3)
-- [ ] Terraform instalado
-- [ ] Infraestrutura codificada
-- [ ] Deploy via Terraform funcionando
+### 📦 Phase 3: Infrastructure as Code (Week 3)
+- [ ] Terraform installed
+- [ ] Infrastructure coded
+- [ ] Deploy via Terraform working
 
-### 🚀 Fase 4: CI/CD (Semana 4)
-- [ ] GitHub Actions configurado
-- [ ] Pipeline de build automatizado
-- [ ] Deploy automático funcionando
+### 🚀 Phase 4: CI/CD (Week 4)
+- [ ] GitHub Actions configured
+- [ ] Automated build pipeline
+- [ ] Automatic deployment working
 
-## 🔗 Links Úteis
+## 🔗 Useful Links
 
-- [Site em Produção](URL_quando_tiver)
+- [Live Site](URL_when_available)
 - [LinkedIn](https://www.linkedin.com/in/jo%C3%A3o-vitor-castro-silva-379972254/)
 
-## 📖 Documentação Adicional
+## 📖 Additional Documentation
 
-- [Como fazer deploy manual](docs/manual-deploy.md)
-- [Guia Terraform](docs/terraform-guide.md)
-- [Pipeline CI/CD](docs/cicd-pipeline.md)
+- [Manual Deploy Guide](docs/manual-deploy.md)
+- [Terraform Guide](docs/terraform-guide.md)
+- [CI/CD Pipeline](docs/cicd-pipeline.md)
 
-## 🎓 Recursos de Estudo
+## 🎓 Study Resources
 
-- [Documentação Docker](https://docs.docker.com/)
+- [Docker Documentation](https://docs.docker.com/)
 - [Terraform AWS Provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
 - [GitHub Actions Docs](https://docs.github.com/en/actions)
 
 ---
 
-**Status**: 🔨 Em desenvolvimento ativo (Janeiro 2026)
+**Status**: 🔨 Actively in development (January 2026)
 
-**Meta**: Estar job-ready para vaga DevOps Junior em Julho 2026
+**Goal**: Job-ready for Junior DevOps position by July 2026
