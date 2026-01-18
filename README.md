@@ -33,13 +33,13 @@ Aprender e demonstrar competências essenciais de DevOps construindo um projeto 
 ### ✅ Fase 1: Setup Inicial (Semana 1)
 - [x] Repositório criado
 - [x] Ambiente local configurado
-- [ ] Site estático criado
-- [ ] Dockerfile criado
-- [ ] Container rodando localmente
+- [x] Site estático criado
+- [x] Dockerfile criado
+- [x] Container rodando localmente
 
 ### 🔄 Fase 2: Deploy Manual (Semana 2)
-- [ ] Conta AWS configurada
-- [ ] EC2 provisionada
+- [x] Conta AWS configurada
+- [x] EC2 provisionada
 - [ ] Deploy manual realizado
 - [ ] Site acessível publicamente
 - [ ] DNS configurado
@@ -54,34 +54,10 @@ Aprender e demonstrar competências essenciais de DevOps construindo um projeto 
 - [ ] Pipeline de build automatizado
 - [ ] Deploy automático funcionando
 
-## 🚀 Como Rodar Localmente
-```bash
-# Clone o repositório
-git clone https://github.com/SEU_USUARIO/devops-learning-2026.git
-cd devops-learning-2026
-
-# Build da imagem Docker
-docker build -t portfolio-devops .
-
-# Rode o container
-docker run -d -p 8080:80 portfolio-devops
-
-# Acesse http://localhost:8080
-```
-
-## 📝 Aprendizados e Desafios
-
-*(Você vai atualizando isso semanalmente)*
-
-### Semana 1
-- **Aprendi**: Como estruturar um Dockerfile eficiente
-- **Desafio**: Entender as diferenças entre CMD e ENTRYPOINT
-- **Solução**: ...
-
 ## 🔗 Links Úteis
 
 - [Site em Produção](URL_quando_tiver)
-- [LinkedIn](seu_linkedin)
+- [LinkedIn](https://www.linkedin.com/in/jo%C3%A3o-vitor-castro-silva-379972254/)
 
 ## 📖 Documentação Adicional
 
