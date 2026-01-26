@@ -40,9 +40,9 @@ Learn and demonstrate essential DevOps skills by building a real project from sc
 ### 🔄 Phase 2: Manual Deploy (Week 2)
 - [x] AWS account configured
 - [x] EC2 provisioned
-- [ ] Manual deployment completed
-- [ ] Site publicly accessible
-- [ ] DNS configured
+- [x] Manual deployment completed
+- [x] Site publicly accessible
+- [x] DNS configured
 
 ### 📦 Phase 3: Infrastructure as Code (Week 3)
 - [ ] Terraform installed
