@@ -208,8 +208,7 @@ sudo usermod -aG docker ubuntu
 
 ```bash
 # Clone project
-git clone https://github.com/jvcastroo-ist/portfolio-devops.git
-cd portfolio-devops
+git clone https://github.com/jvcastroo-ist/devops-learning-2026.git
 
 # Build Docker image
 docker build -t meu-portfolio .
