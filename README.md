@@ -45,9 +45,9 @@ Learn and demonstrate essential DevOps skills by building a real project from sc
 - [x] DNS configured
 
 ### 📦 Phase 3: Infrastructure as Code (Week 3)
-- [ ] Terraform installed
-- [ ] Infrastructure coded
-- [ ] Deploy via Terraform working
+- [x] Terraform installed
+- [x] Infrastructure coded
+- [x] Deploy via Terraform working
 
 ### 🚀 Phase 4: CI/CD (Week 4)
 - [ ] GitHub Actions configured
@@ -56,7 +56,7 @@ Learn and demonstrate essential DevOps skills by building a real project from sc
 
 ## 🔗 Useful Links
 
-- [Live Site](URL_when_available)
+- [Live Site](https://www.joaovitordev.site)
 - [LinkedIn](https://www.linkedin.com/in/jo%C3%A3o-vitor-castro-silva-379972254/)
 
 ## 📖 Additional Documentation
