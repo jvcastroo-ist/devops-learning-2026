@@ -26,3 +26,16 @@ jobs:
       
       - name: List Docker images
         run: docker images | grep portfolio
+
+      - name: Test Docker image
+        run: |
+          docker run -d -p 8080:80 --name test-container portfolio:${{ github.sha }}
+          
+          sleep 5
+          
+          curl -f http://localhost:8080 || (docker logs test-container && exit 1)
+          
+          docker stop test-container
+          docker rm test-container
+          
+          echo "✅ Container is working!"
