@@ -1,9 +1,12 @@
-name: Build Docker Image
+name: Build and Push Docker Image
 
 on: 
   push: 
     branches: [main]
   workflow_dispatch: # manual button to test
+
+env: 
+  DOCKER_IMAGE: portfolio
 
 jobs: 
   build:
@@ -13,29 +16,19 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Show build info 
-        run: |
-          echo "🚀 Building commit: ${{ github.sha }}"
-          echo "📦 Repository: ${{ github.repository }}"
-          echo "👤 Triggered by: ${{ github.actor }}"
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | \
+          docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin   
       
       - name: Build Docker Image
         run: |
-          docker build -t portfolio:${{ github.sha }} .
-          echo "✅ Image built successfully!"
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}:latest .
+          docker tag ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}:latest \
+                     ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}:${{ github.sha }}
       
-      - name: List Docker images
-        run: docker images | grep portfolio
-
-      - name: Test Docker image
+      - name: Push to Docker Hub
         run: |
-          docker run -d -p 8080:80 --name test-container portfolio:${{ github.sha }}
-          
-          sleep 5
-          
-          curl -f http://localhost:8080 || (docker logs test-container && exit 1)
-          
-          docker stop test-container
-          docker rm test-container
-          
-          echo "✅ Container is working!"
+          docker push ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}:${{ github.sha }}
+
+
