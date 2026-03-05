@@ -110,7 +110,7 @@ su - ubuntu -c "git clone https://github.com/jvcastroo-ist/devops-learning-2026.
 # && ensures docker build only runs if cd succeeds
 # ─────────────────────────────────────────────────────────────
 echo "=== Building Docker image ==="
-su - ubuntu -c "cd /home/ubuntu/devops-learning-2026 && docker build -t my-portfolio ."
+su - ubuntu -c "cd /home/ubuntu/devops-learning-2026 && docker build -t portfolio ."
 
 # ─────────────────────────────────────────────────────────────
 # 8. CONFIGURE NGINX (Reverse Proxy)
@@ -176,12 +176,12 @@ nginx -t && systemctl restart nginx
 # ─────────────────────────────────────────────────────────────
 echo "=== Starting Docker container ==="
 su - ubuntu -c "docker run -d \
-  --name my-portfolio \
+  --name portfolio \
   --restart unless-stopped \
   --memory='400m' \
   --cpus='0.5' \
   -p 8080:80 \
-  my-portfolio"
+  portfolio"
 
 # ─────────────────────────────────────────────────────────────
 # SETUP COMPLETE

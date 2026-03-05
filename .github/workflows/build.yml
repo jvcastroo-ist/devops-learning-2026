@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+       # ==================== BUILD ====================
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -27,10 +28,54 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}:latest .
           docker tag ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}:latest \
                      ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}:${{ github.sha }}
-      
+       
+        # ==================== PUSH ====================
       - name: Push to Docker Hub
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}:${{ github.sha }}
 
-
+        # ==================== DEPLOY ==================
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            echo "Starting deployment..."
+            
+            # Pull da imagem nova
+            echo "Pulling new image..."
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE }}:latest
+            
+            # Para container antigo (se existir)
+            echo "Stopping old container..."
+            docker stop portfolio || true
+            docker rm portfolio || true
+            
+            # Roda container novo
+            echo "Starting new container..."
+            docker run -d \
+              --name portfolio \
+              --restart unless-stopped \
+              --memory="400m" \
+              --cpus="0.5" \
+              -p 8080:80 \
+              ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE }}:latest
+            
+            # Cleanup de imagens antigas
+            echo "Cleaning up old images..."
+            docker image prune -af
+            
+            # Verifica se tá rodando
+            echo "Deployment complete!"
+            docker ps | grep portfolio
+      
+      # ==================== SUMMARY ====================
+      - name: Deployment Summary
+        run: |
+          echo " Deployment completed successfully!"
+          echo " Image: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE }}:${{ github.sha }}"
+          echo " Site: http://${{ secrets.EC2_HOST }}"
+          echo " SSH: ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}"
