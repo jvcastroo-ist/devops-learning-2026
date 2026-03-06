@@ -34,6 +34,7 @@ jobs:
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}:${{ github.sha }}
+          echo "user: ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}"
 
         # ==================== DEPLOY ==================
       - name: Deploy to EC2
@@ -47,7 +48,6 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           envs: DOCKER_USER, DOCKER_IMAGE
           script: |
-            echo "user: $DOCKER_USER  and image: $DOCKER_IMAGE"
             echo "Starting deployment..."
             
             # Pull da imagem nova
