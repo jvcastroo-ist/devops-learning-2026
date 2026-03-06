@@ -38,45 +38,37 @@ jobs:
 
         # ==================== DEPLOY ==================
       - name: Deploy to EC2
-        uses: appleboy/ssh-action@v1.0.3
-        env:
-          DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKER_IMAGE: ${{ env.DOCKER_IMAGE }}
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          envs: DOCKER_USER, DOCKER_IMAGE
-          script: |
-            echo "Starting deployment..."
+        run: |
+          DOCKER_USER="${{ secrets.DOCKERHUB_USERNAME }}"
+          DOCKER_IMG="${{ env.DOCKER_IMAGE }}"
+          EC2_HOST="${{ secrets.EC2_HOST }}"
+          EC2_USER="${{ secrets.EC2_USER }}"
+          
+          echo "Deploying $DOCKER_USER/$DOCKER_IMG:latest to $EC2_HOST"
+          
+          ssh -i ~/.ssh/aws-keys/devops-study-key.pem \
+              -o StrictHostKeyChecking=no \
+              $EC2_USER@$EC2_HOST bash << EOF
+            echo "🚀 Starting deployment..."
             
-            # Pull da imagem nova
-            echo "Pulling new image..."
-            docker pull $DOCKER_USER/$DOCKER_IMAGE:latest
+            docker pull $DOCKER_USER/$DOCKER_IMG:latest
             
-            # Para container antigo (se existir)
-            echo "Stopping old container..."
-            docker stop portfolio || true
-            docker rm portfolio || true
+            docker stop portfolio 2>/dev/null || true
+            docker rm portfolio 2>/dev/null || true
             
-            # Roda container novo
-            echo "Starting new container..."
             docker run -d \
               --name portfolio \
               --restart unless-stopped \
               --memory="400m" \
               --cpus="0.5" \
               -p 8080:80 \
-              $DOCKER_USER/$DOCKER_IMAGE:latest
+              $DOCKER_USER/$DOCKER_IMG:latest
             
-            # Cleanup de imagens antigas
-            echo "Cleaning up old images..."
             docker image prune -af
             
-            # Verifica se tá rodando
-            echo "Deployment complete!"
+            echo "✅ Deployment complete!"
             docker ps | grep portfolio
-      
+          EOF
       # ==================== SUMMARY ====================
       - name: Deployment Summary
         run: |
