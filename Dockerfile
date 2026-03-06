@@ -1,14 +1,17 @@
-# Usa a imagem oficial do Nginx como base
+# Use official Nginx Alpine image as base
 FROM nginx:alpine
 
-# Remove o site padrão do Nginx
-RUN rm -rf /usr/share/nginx/html/*
+# Set working directory
+WORKDIR /usr/share/nginx/html
 
-# Copia seu site para o diretório do Nginx
-COPY site/ /usr/share/nginx/html/
+# Remove default Nginx static assets
+RUN rm -rf ./*
 
-# Expõe a porta 80
+# Copy website files
+COPY site/ .
+
+# Expose port 80
 EXPOSE 80
 
-# Comando para iniciar o Nginx
+# Start Nginx in foreground
 CMD ["nginx", "-g", "daemon off;"]

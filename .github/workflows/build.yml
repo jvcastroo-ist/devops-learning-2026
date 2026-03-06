@@ -9,13 +9,19 @@ env:
   DOCKER_IMAGE: portfolio
 
 jobs: 
-  build:
+  build-push-deploy:
     runs-on: ubuntu-latest
 
     steps:
        # ==================== BUILD ====================
       - name: Checkout repo
         uses: actions/checkout@v4
+
+      - name: Setup Buildx
+        run: |
+          # create customized builder with cache 
+          docker buildx create --use --name mybuilder --driver docker-container
+          docker buildx inspect --bootstrap
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3 
@@ -25,16 +31,19 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}:latest .
-          docker tag ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}:latest \
-                     ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}:${{ github.sha }}
-       
+          docker buildx build \
+          --cache-from type=gha \
+          --cache-to type=gha,mode=max \
+          --tag ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}:latest \
+          --tag ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}:${{ github.sha }} \
+          --load \
+          .
+
         # ==================== PUSH ====================
       - name: Push to Docker Hub
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}:${{ github.sha }}
-          echo "user: ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}"
 
         # ==================== DEPLOY ==================
       - name: Setup SSH
@@ -55,7 +64,7 @@ jobs:
           ssh -i ~/.ssh/deploy_key \
               -o StrictHostKeyChecking=no \
               $EC2_USER@$EC2_HOST bash << EOF
-            echo "🚀 Starting deployment..."
+            echo "Starting deployment..."
             
             docker pull $DOCKER_USER/$DOCKER_IMG:latest
             
@@ -72,7 +81,7 @@ jobs:
             
             docker image prune -af
             
-            echo "✅ Deployment complete!"
+            echo "Deployment complete!"
             docker ps | grep portfolio
           EOF
       # ==================== SUMMARY ====================
