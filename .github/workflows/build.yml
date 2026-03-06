@@ -47,7 +47,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           envs: DOCKER_USER, DOCKER_IMAGE
           script: |
-            echo "user: ${{ DOCKER_USER }} and image: ${{ DOCKER_IMAGE }}"
+            echo "user: $DOCKER_USER  and image: $DOCKER_IMAGE"
             echo "Starting deployment..."
             
             # Pull da imagem nova
